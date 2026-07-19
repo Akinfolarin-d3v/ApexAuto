@@ -1,4 +1,4 @@
-# LoisnX
+# ApexAutos
 
 A premium car dealership web app: browse, filter, compare, finance,
 trade in, and buy — plus a full admin dashboard for managing inventory.
@@ -185,3 +185,56 @@ tokens changed. Hand-redesigned on top of that: `Button`, `Badge`,
 Full responsive QA and a final build-verification pass (manual, since
 this sandbox has no network access for `npm install`/`npm run build`)
 are still open — see the note in chat for what that will cover.
+
+## Rebrand: LoisnX → ApexAutos
+
+Every mention across the codebase, localStorage keys, the Cloudinary
+folder prefix, and the email domain were updated to match
+(`hello@apexautos.com`). The Navbar/Footer/MobileMenu wordmark is
+currently text ("Apex" + signal-yellow "Autos") — swap to the real
+logo file once it's uploaded (see below).
+
+- **Fixed stale Home/Inventory data** — `app/page.jsx`,
+  `app/inventory/page.jsx`, and `app/inventory/[id]/page.jsx` now export
+  `dynamic = "force-dynamic"`. Without it, Next.js statically rendered
+  these Server Components once and cached them, so cars added/edited in
+  Firestore never showed up outside the (client-fetched) Admin section.
+- **Metadata rebuilt** — root layout now has a proper title template
+  (`%s — ApexAutos`), OpenGraph/Twitter card objects, keywords, and a
+  `viewport` export for theme-color. `metadataBase` is currently a
+  placeholder (`https://apexautos.com`) — update it to the real domain
+  once deployed, or social share previews will resolve image URLs wrong.
+- **Favicon / logo / OG image — not wired up yet.** `logo.png`,
+  `favicon.png`, and `meta.png` were referenced but never actually
+  uploaded. Drop them at these exact paths and they activate
+  automatically (Next.js file-based conventions, no code changes
+  needed):
+  - `app/icon.png` — favicon
+  - `app/opengraph-image.png` and `app/twitter-image.png` — social
+    preview image
+  - `public/logo.png` — then swap the text wordmark in `Navbar.jsx` /
+    `Footer.jsx` / `MobileMenu.jsx` for an `<Image src="/logo.png" .../>`
+- **Two-tier admin system** — `/admin/team` (primary admins only,
+  enforced server-side via Firestore rules, not just hidden in the UI).
+  Primary admin = a real Firebase Auth email/password account created
+  manually in the Firebase Console. Invited admins are added by email
+  only and can sign in with *any* password — under the hood this uses
+  Firebase anonymous auth bound to an allowlisted email
+  (`admin_invites` + `admins` collections; see `lib/auth.js` and
+  `firestore.rules` for the exact claim flow). Invited admins can
+  manage inventory but cannot invite further admins.
+  **Security tradeoff worth knowing:** the invite flow checks "is this
+  email on the allowlist," not "does this person actually control that
+  email inbox" — there's no password or email-verification step for
+  invited admins. Fine for handing off listing management to someone
+  you trust; not a substitute for real per-user auth if the stakes ever
+  go up.
+- **`firestore.rules`** — added to the repo root, matches the rules
+  above exactly. Deploy via Firebase CLI
+  (`firebase deploy --only firestore:rules`) or paste into Firebase
+  Console → Firestore Database → Rules.
+- **Mobile input zoom fixed** — iOS Safari auto-zooms the page when
+  focusing a form input with `font-size` under 16px. Added a global
+  media-query rule in `globals.css` forcing 16px on all inputs/selects/
+  textareas under 768px, rather than hunting down every individual
+  input's className.
