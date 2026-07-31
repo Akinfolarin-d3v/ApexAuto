@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import PaymentCalculator from "@/components/financing/PaymentCalculator";
 
 export const metadata = {
-  title: "Payment Calculator — LoisnX",
+  title: "Payment Calculator",
   description: "Estimate a monthly payment for any car in stock.",
 };
 

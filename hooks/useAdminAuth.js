@@ -12,7 +12,18 @@ export function useAdminAuth() {
       let unsubscribe = () => {};
       import("firebase/auth").then(({ getAuth, onAuthStateChanged }) => {
         unsubscribe = onAuthStateChanged(getAuth(app), (fbUser) => {
-          setUser(fbUser ? { email: fbUser.email } : null);
+          if (!fbUser) {
+            setUser(null);
+            return;
+          }
+          if (fbUser.isAnonymous) {
+            // Invited admin — email lives in the local cache, not on the
+            // anonymous auth object itself.
+            const cached = getLocalSession();
+            setUser({ email: cached?.email ?? "Invited admin", role: "invited" });
+            return;
+          }
+          setUser({ email: fbUser.email, role: "primary" });
         });
       });
       return () => unsubscribe();
@@ -30,5 +41,5 @@ export function useAdminAuth() {
     };
   }, []);
 
-  return { user, loading: user === undefined };
+  return { user, loading: user === undefined, isPrimary: user?.role === "primary" };
 }

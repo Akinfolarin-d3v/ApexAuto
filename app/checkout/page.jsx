@@ -4,7 +4,7 @@ import CheckoutWizard from "@/components/checkout/CheckoutWizard";
 import Button from "@/components/ui/Button";
 
 export const metadata = {
-  title: "Checkout — LoisnX",
+  title: "Checkout",
 };
 
 export default async function CheckoutPage({ searchParams }) {

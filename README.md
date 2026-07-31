@@ -1,4 +1,4 @@
-# ApexAutos
+# LoisnX
 
 A premium car dealership web app: browse, filter, compare, finance,
 trade in, and buy — plus a full admin dashboard for managing inventory.
@@ -186,13 +186,14 @@ Full responsive QA and a final build-verification pass (manual, since
 this sandbox has no network access for `npm install`/`npm run build`)
 are still open — see the note in chat for what that will cover.
 
-## Rebrand: LoisnX → ApexAutos
+## Rebrand to ApexAutos, then reverted back to LoisnX
 
-Every mention across the codebase, localStorage keys, the Cloudinary
-folder prefix, and the email domain were updated to match
-(`hello@apexautos.com`). The Navbar/Footer/MobileMenu wordmark is
-currently text ("Apex" + signal-yellow "Autos") — swap to the real
-logo file once it's uploaded (see below).
+Briefly renamed everything to ApexAutos, then reverted back to LoisnX
+per request — every mention across the codebase, localStorage keys,
+the Cloudinary folder prefix, and the email domain
+(`hello@loisnx.com`) are back to LoisnX, including the
+Navbar/Footer/MobileMenu "LOISN" + yellow "X" chip wordmark. Everything
+else from that same work session is unaffected — see below.
 
 - **Fixed stale Home/Inventory data** — `app/page.jsx`,
   `app/inventory/page.jsx`, and `app/inventory/[id]/page.jsx` now export
@@ -200,9 +201,9 @@ logo file once it's uploaded (see below).
   these Server Components once and cached them, so cars added/edited in
   Firestore never showed up outside the (client-fetched) Admin section.
 - **Metadata rebuilt** — root layout now has a proper title template
-  (`%s — ApexAutos`), OpenGraph/Twitter card objects, keywords, and a
+  (`%s — LoisnX`), OpenGraph/Twitter card objects, keywords, and a
   `viewport` export for theme-color. `metadataBase` is currently a
-  placeholder (`https://apexautos.com`) — update it to the real domain
+  placeholder (`https://loisnx.com`) — update it to the real domain
   once deployed, or social share previews will resolve image URLs wrong.
 - **Favicon / logo / OG image — not wired up yet.** `logo.png`,
   `favicon.png`, and `meta.png` were referenced but never actually

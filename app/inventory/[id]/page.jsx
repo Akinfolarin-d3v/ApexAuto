@@ -19,12 +19,16 @@ const STATUS_LABEL = {
 
 export async function generateMetadata({ params }) {
   const car = await getCarById(params.id);
-  if (!car) return { title: "Vehicle not found — LoisnX" };
+  if (!car) return { title: "Vehicle not found" };
   return {
-    title: `${car.title} — LoisnX`,
+    title: car.title,
     description: car.description,
   };
 }
+
+// Reads a single live Firestore doc — must stay dynamic so edits made in
+// the admin dashboard (price, status, photos) show up immediately.
+export const dynamic = "force-dynamic";
 
 export default async function CarDetailPage({ params }) {
   const car = await getCarById(params.id);

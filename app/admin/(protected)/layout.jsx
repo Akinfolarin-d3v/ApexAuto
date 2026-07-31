@@ -2,7 +2,7 @@ import AdminGuard from "@/components/admin/AdminGuard";
 import AdminShell from "@/components/admin/AdminShell";
 
 export const metadata = {
-  title: "Admin — LoisnX",
+  title: "Admin",
   robots: { index: false, follow: false },
 };
 

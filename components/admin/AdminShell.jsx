@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Car, PlusCircle, LogOut, ExternalLink } from "lucide-react";
+import { LayoutDashboard, Car, PlusCircle, Users, LogOut, ExternalLink } from "lucide-react";
 import { clsx } from "@/lib/utils";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { signOutAdmin } from "@/lib/auth";
+import { isFirebaseConfigured } from "@/lib/firebase";
 
 const NAV = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
@@ -16,12 +17,16 @@ const NAV = [
 export default function AdminShell({ children }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user } = useAdminAuth();
+  const { user, isPrimary } = useAdminAuth();
 
   async function handleLogout() {
     await signOutAdmin();
     router.replace("/admin/login");
   }
+
+  const nav = isFirebaseConfigured && isPrimary
+    ? [...NAV, { href: "/admin/team", label: "Team", icon: Users }]
+    : NAV;
 
   return (
     <div className="flex min-h-screen bg-canvas">
@@ -31,7 +36,7 @@ export default function AdminShell({ children }) {
         </Link>
 
         <nav className="mt-10 flex flex-col gap-1">
-          {NAV.map((item) => {
+          {nav.map((item) => {
             const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
             const Icon = item.icon;
             return (
@@ -66,7 +71,19 @@ export default function AdminShell({ children }) {
             <LogOut size={16} strokeWidth={1.75} />
             Log Out
           </button>
-          {user?.email && <p className="mt-2 truncate px-3 font-mono text-[11px] text-steel-400">{user.email}</p>}
+          {user?.email && (
+            <div className="mt-2 px-3">
+              <p className="truncate text-[11px] text-steel-400">{user.email}</p>
+              {isFirebaseConfigured && (
+                <span className={clsx(
+                  "mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide",
+                  isPrimary ? "bg-signal-tint text-signal-dim" : "bg-trust-tint text-trust-dim"
+                )}>
+                  {isPrimary ? "Primary admin" : "Invited admin"}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </aside>
 

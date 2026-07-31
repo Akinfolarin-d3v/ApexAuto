@@ -2,7 +2,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import ContactForm from "@/components/contact/ContactForm";
 
 export const metadata = {
-  title: "Contact — LoisnX",
+  title: "Contact",
   description: "Get in touch with the LoisnX team.",
 };
 

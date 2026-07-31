@@ -4,7 +4,7 @@ import Button from "@/components/ui/Button";
 
 export const metadata = {
   title: "About",
-  description: "Why ApexAutos exists, and how we've rebuilt car buying as software.",
+  description: "Why LoisnX exists, and how we've rebuilt car buying as software.",
 };
 
 const VALUES = [
@@ -31,7 +31,7 @@ const VALUES = [
 ];
 
 const MILESTONES = [
-  { year: "2022", event: "ApexAutos founded on a simple premise: buying a car shouldn't feel adversarial." },
+  { year: "2022", event: "LoisnX founded on a simple premise: buying a car shouldn't feel adversarial." },
   { year: "2023", event: "First 10,000 vehicles sold entirely online, across 14 states." },
   { year: "2024", event: "Launched trade-in estimates and a payment calculator to make every number visible up front." },
   { year: "2026", event: "48,000+ cars sold, with the same no-pressure model from day one." },
@@ -41,7 +41,7 @@ export default function AboutPage() {
   return (
     <div className="pt-20">
       <section className="container-page py-16">
-        <p className="eyebrow bg-trust-tint text-trust-dim">About ApexAutos</p>
+        <p className="eyebrow bg-trust-tint text-trust-dim">About LoisnX</p>
         <h1 className="mt-3 max-w-2xl font-display text-4xl leading-tight tracking-tightest md:text-6xl">
           We think buying a car should feel like using good software.
         </h1>

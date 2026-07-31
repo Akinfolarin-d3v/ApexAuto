@@ -3,7 +3,7 @@ import { FAQ_GROUPS } from "@/data/faq";
 import FAQAccordion from "@/components/faq/FAQAccordion";
 
 export const metadata = {
-  title: "FAQ — LoisnX",
+  title: "FAQ",
   description: "Answers to common questions about buying, financing, and trading in a car on LoisnX.",
 };
 
